@@ -3,6 +3,7 @@ import { createDrawerNavigator, createStackNavigator, createAppContainer } from 
 import Login from '../../screens/login/Login'
 import Register from '../../screens/register/Register'
 import Map from '../../screens/map/Map'
+import Home from '../../screens/home/Home'
 // import Leaderboards from '../../screens/leaderboards/Leaderboards'
 // import CustomsDrawer from '../../components/CustomsDrawer'
 // import Home from '../../screens/home/Home'
@@ -10,10 +11,11 @@ import Map from '../../screens/map/Map'
 const AppNavigation = createStackNavigator({
     Login,
     Register,
-    Map
+    Map,
+    Home
 
 }, {
-        initialRouteName: 'Login',
+        initialRouteName: 'Home',
         headerMode: 'none'
     })
 

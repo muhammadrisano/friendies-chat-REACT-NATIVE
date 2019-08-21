@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     },
     borderInput: {
         width: "90%",
-        backgroundColor: "#eee",
+        backgroundColor: "rgba(219, 231, 250, 0.5)",
         borderRadius: 30,
         paddingLeft: 10,
         marginLeft: "auto",
