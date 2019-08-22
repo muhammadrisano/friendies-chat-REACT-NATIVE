@@ -197,6 +197,18 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#2c3e50'
+    },
+    inputMessage: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        width: "80%",
+        marginBottom: 10,
+        borderRadius: 5
+    },
+    btnText: {
+        color: 'darkblue',
+        fontSize: 20
     }
 
 

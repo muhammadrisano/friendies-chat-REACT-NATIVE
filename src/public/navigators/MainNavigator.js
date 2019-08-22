@@ -4,6 +4,7 @@ import Login from '../../screens/login/Login'
 import Register from '../../screens/register/Register'
 import Map from '../../screens/map/Map'
 import Home from '../../screens/home/Home'
+import Chat from '../../screens/chat/Chat'
 // import Leaderboards from '../../screens/leaderboards/Leaderboards'
 // import CustomsDrawer from '../../components/CustomsDrawer'
 // import Home from '../../screens/home/Home'
@@ -12,10 +13,11 @@ const AppNavigation = createStackNavigator({
     Login,
     Register,
     Map,
-    Home
+    Home,
+    Chat
 
 }, {
-        initialRouteName: 'Home',
+        initialRouteName: 'Login',
         headerMode: 'none'
     })
 

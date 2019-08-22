@@ -26,6 +26,7 @@ export class Login extends Component {
             .then((res) => {
                 console.warn(res)
                 Alert.alert("You Succes Login")
+                this.props.navigation.navigate("Home")
             })
             .catch(function (error) {
                 // Handle Errors here.
