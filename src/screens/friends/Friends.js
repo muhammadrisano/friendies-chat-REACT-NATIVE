@@ -4,15 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
 import firebase from '../../config/Firebase'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
-
-export class Home extends Component {
+export class Friends extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             users: [],
-            uid: null,
-            keyid: []
+            uid: null
         }
 
     }
@@ -26,56 +24,30 @@ export class Home extends Component {
             })
         }
 
-
-
     }
-    getmessage = () => {
-        firebase.database().ref('messages').child(this.state.uid).orderByChild("time").on('child_added', (val) => {
-            // let keyuser = []
-            // keyuser = [...keyuser, val.key]
-            // console.warn(keyuser)
-            this.setState((prevState) => {
-                return {
-                    keyid: [...prevState.keyid, val.key]
-                }
-            })
-            // console.warn(this.state.keyid)
 
-            let dbRef = firebase.database().ref('users/' + val.key);
-
-            dbRef.on('value', (val) => {
-                console.warn(val.val())
-                let person = val.val();
-                person.uid = val.key;
-                if (person.uid !== this.state.uid) {
-                    this.setState((prevState) => {
-                        return {
-                            users: [...prevState.users, person]
-                        }
-                    })
-                }
-
-
-            })
+    getFriends = () => {
+        let dbRef = firebase.database().ref('users');
+        dbRef.on('child_added', (val) => {
+            let person = val.val();
+            person.uid = val.key;
+            if (person.uid !== this.state.uid) {
+                this.setState((prevState) => {
+                    return {
+                        users: [...prevState.users, person]
+                    }
+                })
+            }
 
         })
-
-
     }
     componentDidMount = () => {
-
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            this.setState({
-                users: []
-            })
-            this.getmessage()
+            this.getFriends()
         });
-
     }
-
     renderRow = ({ item }) => {
         return (
-
             <ListItem avatar onPress={() => this.props.navigation.navigate('Chat', item)}>
                 <Left>
                     <Thumbnail small source={{ uri: item.avatar }} />
@@ -84,14 +56,12 @@ export class Home extends Component {
                     <Text>{item.name}</Text>
                     <Text note>{item.uid}</Text>
                 </Body>
-                <Right>
-                    <Text note>3:43 pm</Text>
-                </Right>
             </ListItem>
         )
     }
 
     render() {
+        console.warn(this.state.users)
         return (
             <Container>
                 <Header style={{ backgroundColor: "#eee" }}>
@@ -109,17 +79,15 @@ export class Home extends Component {
                         </Button>
                     </Right>
                 </Header>
-
                 <List style={{ flex: 1 }}>
-
 
                     <FlatList
                         data={this.state.users}
                         renderItem={this.renderRow}
                         keyExtractor={(item) => item.uid}
                     />
-
                 </List>
+
 
                 <Footer >
                     <FooterTab style={{ backgroundColor: "#eee" }}>
@@ -135,7 +103,7 @@ export class Home extends Component {
                             <FontAwesomeIcon icon={faUser} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Profil</Text>
                         </Button>
-                        <Button vertical onPress={() => this.props.navigation.navigate('Friends')}>
+                        <Button vertical>
                             <FontAwesomeIcon icon={faUserFriends} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Friend</Text>
                         </Button>
@@ -146,4 +114,4 @@ export class Home extends Component {
     }
 }
 
-export default Home
+export default Friends

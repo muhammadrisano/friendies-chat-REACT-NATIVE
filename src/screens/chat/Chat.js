@@ -43,7 +43,7 @@ export class Chat extends Component {
     componentDidMount() {
         firebase.database().ref('messages').child(this.state.uid).child(this.state.person.uid)
             .on('child_added', (value) => {
-                console.warn(value)
+                console.warn(value.val())
                 this.setState((prevState) => {
                     return {
                         messageList: [...prevState.messageList, value.val()]
@@ -98,7 +98,6 @@ export class Chat extends Component {
         )
     }
     render() {
-        console.warn(this.state.uid)
         let { height, width } = Dimensions.get('window')
         return (
             <Container>
