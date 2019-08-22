@@ -16,14 +16,12 @@ export class Friends extends Component {
     }
 
     componentWillMount() {
-
         var user = firebase.auth().currentUser;
         if (user != null) {
             this.setState({
                 uid: user.uid
             })
         }
-
     }
 
     getFriends = () => {
@@ -41,6 +39,7 @@ export class Friends extends Component {
 
         })
     }
+
     componentDidMount = () => {
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
             this.getFriends()

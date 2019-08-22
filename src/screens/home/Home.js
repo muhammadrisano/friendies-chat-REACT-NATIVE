@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
 import firebase from '../../config/Firebase'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
+import Geolocation from '@react-native-community/geolocation';
 
 export class Home extends Component {
 
@@ -25,7 +26,16 @@ export class Home extends Component {
                 uid: user.uid
             })
         }
-
+        Geolocation.getCurrentPosition(position => {
+            // const { longitude, latitude } = position
+            firebase.database().ref('users/' + this.state.uid).update({
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude
+            })
+        },
+            error => Alert.alert(error.message),
+            { timeout: 20000, maximumAge: 1000 }
+        )
 
 
     }
@@ -92,6 +102,7 @@ export class Home extends Component {
     }
 
     render() {
+        console.warn(this.state.users)
         return (
             <Container>
                 <Header style={{ backgroundColor: "#eee" }}>

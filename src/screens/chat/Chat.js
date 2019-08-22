@@ -11,7 +11,8 @@ export class Chat extends Component {
         this.state = {
             person: {
                 name: props.navigation.getParam('name'),
-                uid: props.navigation.getParam('uid')
+                uid: props.navigation.getParam('uid'),
+                avatar: props.navigation.getParam('avatar')
             },
             textMessage: "",
             uid: null,
@@ -111,9 +112,9 @@ export class Chat extends Component {
                         <Title style={{ color: "salmon" }}> {this.props.navigation.getParam('name')}</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
-                            <Icon name='menu' />
-                        </Button>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profilefriend', this.state.person.uid)}>
+                            <Thumbnail square small source={{ uri: this.props.navigation.getParam('avatar') }} />
+                        </TouchableOpacity>
                     </Right>
                 </Header>
                 <FlatList
