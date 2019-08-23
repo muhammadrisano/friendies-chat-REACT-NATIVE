@@ -165,11 +165,11 @@ export class Map extends Component {
                             <FontAwesomeIcon icon={faMapMarkerAlt} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Map</Text>
                         </Button>
-                        <Button vertical>
+                        <Button vertical onPress={() => this.props.navigation.navigate("Myprofile")}>
                             <FontAwesomeIcon icon={faUser} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Profil</Text>
                         </Button>
-                        <Button vertical>
+                        <Button vertical onPress={() => this.props.navigation.navigate("Friends")} >
                             <FontAwesomeIcon icon={faUserFriends} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Friend</Text>
                         </Button>

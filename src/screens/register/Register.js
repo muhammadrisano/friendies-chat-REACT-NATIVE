@@ -90,7 +90,10 @@ export class Register extends Component {
         return this.state.usersRef.child(createdUser.user.uid).set({
             name: createdUser.user.displayName,
             avatar: createdUser.user.photoURL,
-            telp: this.state.telp
+            telp: this.state.telp,
+            status: "none",
+            latitude: "-7.7584989",
+            longitude: "110.5673452"
         })
     }
     render() {

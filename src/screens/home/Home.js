@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Header, List, ListItem, Thumbnail, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
+import { Container, Header, View, List, ListItem, Thumbnail, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
+import { ActivityIndicator } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import firebase from '../../config/Firebase'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import Geolocation from '@react-native-community/geolocation';
@@ -13,7 +14,8 @@ export class Home extends Component {
         this.state = {
             users: [],
             uid: null,
-            keyid: []
+            keyid: [],
+            loading: true
         }
 
     }
@@ -39,8 +41,11 @@ export class Home extends Component {
 
 
     }
-    getmessage = () => {
-        firebase.database().ref('messages').child(this.state.uid).orderByChild("time").on('child_added', (val) => {
+    getmessage = async () => {
+        this.setState({
+            loading: true
+        })
+        await firebase.database().ref('messages').child(this.state.uid).orderByChild("time").on('child_added', (val) => {
             // let keyuser = []
             // keyuser = [...keyuser, val.key]
             // console.warn(keyuser)
@@ -57,6 +62,9 @@ export class Home extends Component {
                 console.warn(val.val())
                 let person = val.val();
                 person.uid = val.key;
+                this.setState({
+                    loading: false
+                })
                 if (person.uid !== this.state.uid) {
                     this.setState((prevState) => {
                         return {
@@ -70,7 +78,13 @@ export class Home extends Component {
 
         })
 
-
+    }
+    handleLogout = () => {
+        firebase.auth().signOut()
+            .then(() => {
+                Alert.alert("berhasil logut silahkan login kembali");
+                this.props.navigation.navigation('Login')
+            })
     }
     componentDidMount = () => {
 
@@ -115,15 +129,19 @@ export class Home extends Component {
                         <Title style={{ color: "salmon" }}>Friendies Chat</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
-                            <Text>Cancel</Text>
-                        </Button>
+                        <TouchableOpacity onPress={() => {
+                            this.handleLogout()
+                        }}>
+                            <FontAwesomeIcon icon={faSignOutAlt} color={"salmon"} size={25} />
+                        </TouchableOpacity>
                     </Right>
                 </Header>
 
                 <List style={{ flex: 1 }}>
-
-
+                    {(this.state.loading) ?
+                        <ActivityIndicator size="large" color="#0000ff" /> :
+                        <View></View>
+                    }
                     <FlatList
                         data={this.state.users}
                         renderItem={this.renderRow}
@@ -142,7 +160,7 @@ export class Home extends Component {
                             <FontAwesomeIcon icon={faMapMarkerAlt} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Map</Text>
                         </Button>
-                        <Button vertical>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Myprofile')}>
                             <FontAwesomeIcon icon={faUser} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Profil</Text>
                         </Button>

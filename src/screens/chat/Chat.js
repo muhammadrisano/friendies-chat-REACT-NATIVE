@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Alert, Dimensions } from 'react-native'
+import { Text, View, TextInput, Alert, Dimensions, Image } from 'react-native'
 import { tsThisType } from '@babel/types';
-import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail } from 'native-base';
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser, faTelegramPlane, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { styles } from '../../style/Style';
 import firebase from '../../config/Firebase'
 export class Chat extends Component {
@@ -112,7 +114,7 @@ export class Chat extends Component {
                         <Title style={{ color: "salmon" }}> {this.props.navigation.getParam('name')}</Title>
                     </Body>
                     <Right>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profilefriend', this.state.person.uid)}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profilefriend', { uid: this.state.person.uid })}>
                             <Thumbnail square small source={{ uri: this.props.navigation.getParam('avatar') }} />
                         </TouchableOpacity>
                     </Right>
@@ -130,7 +132,7 @@ export class Chat extends Component {
                         placeholder="Type message..."
                         onChangeText={this.handleChange('textMessage')} />
                     <TouchableOpacity onPress={this.sendMessage} style={{ paddingBottom: 10, marginLeft: 5 }}>
-                        <Text style={styles.btnText}>Send</Text>
+                        <FontAwesomeIcon icon={faPaperPlane} color={"salmon"} size={25} />
                     </TouchableOpacity>
                 </View>
             </Container >

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Alert, AsyncStorage, Image, ImageBackground } from 'react-native'
+import { Text, View, Alert, AsyncStorage, Image, ImageBackground, ActivityIndicator } from 'react-native'
 import { Container, Header, Content, Form, Item, Input, Label, Button, H3, H2 } from 'native-base';
 import { styles } from '../../style/Style'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -16,22 +16,32 @@ export class Login extends Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            loading: false,
         }
     }
 
 
     handleLogin = async () => {
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+        this.setState({
+            loading: true
+        })
+        await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
             .then((res) => {
-                console.warn(res)
                 Alert.alert("You Succes Login")
+                this.setState({
+                    loading: false
+                })
                 this.props.navigation.navigate("Home")
+
             })
             .catch(function (error) {
                 // Handle Errors here.
                 // var errorCode = error.code;
                 // var errorMessage = error.message;
+                this.setState({
+                    loading: false
+                })
                 Alert.alert(error.message)
             });
     }
@@ -61,15 +71,17 @@ export class Login extends Component {
                                 </Form>
                             </View>
                         </View>
-
-
-
                         <View style={[styles.flex1, styles.fluid, styles.contentCenter, styles.textLeftRight]}>
                             <View style={{ width: 200, marginTop: 10, }}><H3>Login</H3></View>
                             <View style={{ width: 60 }}>
-                                <Button warning style={[styles.RoundButton, styles.textCenter]} onPress={() => this.handleLogin()}>
-                                    <FontAwesomeIcon icon={['fas', 'arrow-right']} size={30} color="white" />
-                                </Button>
+                                {(!this.state.loading) ?
+                                    <Button warning style={[styles.RoundButton, styles.textCenter]} onPress={() => this.handleLogin()}>
+                                        <FontAwesomeIcon icon={['fas', 'arrow-right']} size={30} color="white" />
+                                    </Button> :
+                                    <Button warning style={[styles.RoundButton, styles.textCenter]} onPress={() => this.handleLogin()}>
+                                        <ActivityIndicator size="large" color="white" />
+                                    </Button>
+                                }
                             </View>
                         </View>
 

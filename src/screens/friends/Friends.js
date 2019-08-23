@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Header, List, ListItem, Thumbnail, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
+import { Container, Header, List, ListItem, Thumbnail, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title, View } from 'native-base';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
 import firebase from '../../config/Firebase'
+import { ActivityIndicator } from 'react-native'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 export class Friends extends Component {
 
@@ -10,7 +11,8 @@ export class Friends extends Component {
         super(props);
         this.state = {
             users: [],
-            uid: null
+            uid: null,
+            loading: true
         }
 
     }
@@ -24,11 +26,17 @@ export class Friends extends Component {
         }
     }
 
-    getFriends = () => {
+    getFriends = async () => {
+        this.setState({
+            loading: true
+        })
         let dbRef = firebase.database().ref('users');
-        dbRef.on('child_added', (val) => {
+        await dbRef.on('child_added', (val) => {
             let person = val.val();
             person.uid = val.key;
+            this.setState({
+                loading: false
+            })
             if (person.uid !== this.state.uid) {
                 this.setState((prevState) => {
                     return {
@@ -79,6 +87,10 @@ export class Friends extends Component {
                     </Right>
                 </Header>
                 <List style={{ flex: 1 }}>
+                    {(this.state.loading) ?
+                        <ActivityIndicator size="large" color="#0000ff" /> :
+                        <View></View>
+                    }
 
                     <FlatList
                         data={this.state.users}
