@@ -3,7 +3,7 @@ import { Container, Header, List, ListItem, Thumbnail, Content, Footer, FooterTa
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
 import firebase from '../../config/Firebase'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, Image } from 'react-native'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 export class Friends extends Component {
 
@@ -61,7 +61,7 @@ export class Friends extends Component {
                 </Left>
                 <Body>
                     <Text>{item.name}</Text>
-                    <Text note>{item.uid}</Text>
+                    <Text note>{item.status}</Text>
                 </Body>
             </ListItem>
         )
@@ -73,18 +73,11 @@ export class Friends extends Component {
             <Container>
                 <Header style={{ backgroundColor: "#eee" }}>
                     <Left>
-                        <Button transparent>
-                            <Icon name='menu' style={{ color: "salmon" }} />
-                        </Button>
+                        <Image source={require('../../assets/images/iconfrendies.png')} style={{ width: 50, height: 30 }} />
                     </Left>
                     <Body>
                         <Title style={{ color: "salmon" }}>Friendies Chat</Title>
                     </Body>
-                    <Right>
-                        <Button transparent>
-                            <Text>Cancel</Text>
-                        </Button>
-                    </Right>
                 </Header>
                 <List style={{ flex: 1 }}>
                     {(this.state.loading) ?
@@ -102,7 +95,7 @@ export class Friends extends Component {
 
                 <Footer >
                     <FooterTab style={{ backgroundColor: "#eee" }}>
-                        <Button vertical style={{ backgroundColor: "#d1d1d1" }} onPress={() => this.props.navigation.navigate("Home")}>
+                        <Button vertical onPress={() => this.props.navigation.navigate("Home")}>
                             <FontAwesomeIcon icon={faComments} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Chat</Text>
                         </Button>
@@ -110,11 +103,11 @@ export class Friends extends Component {
                             <FontAwesomeIcon icon={faMapMarkerAlt} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Map</Text>
                         </Button>
-                        <Button vertical>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Myprofile')}>
                             <FontAwesomeIcon icon={faUser} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Profil</Text>
                         </Button>
-                        <Button vertical>
+                        <Button vertical style={{ backgroundColor: "#d1d1d1" }} vertical onPress={() => this.props.navigation.navigate('Friends')} >
                             <FontAwesomeIcon icon={faUserFriends} color={"salmon"} size={25} />
                             <Text style={{ color: "salmon" }}>Friend</Text>
                         </Button>

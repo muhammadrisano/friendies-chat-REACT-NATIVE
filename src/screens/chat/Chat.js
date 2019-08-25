@@ -132,7 +132,7 @@ export class Chat extends Component {
                         placeholder="Type message..."
                         onChangeText={this.handleChange('textMessage')} />
                     <TouchableOpacity onPress={this.sendMessage} style={{ paddingBottom: 10, marginLeft: 5 }}>
-                        <FontAwesomeIcon icon={faPaperPlane} color={"salmon"} size={25} />
+                        <FontAwesomeIcon icon={faPaperPlane} color={"salmon"} size={32} />
                     </TouchableOpacity>
                 </View>
             </Container >

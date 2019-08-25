@@ -7,6 +7,7 @@ import { fasFaArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { ScrollView } from 'react-native-gesture-handler';
 import firebase from '../../config/Firebase'
+import Geolocation from '@react-native-community/geolocation';
 // import { connect } from 'react-redux'
 // import { loginUser } from '../../redux/actions/users'
 
@@ -30,20 +31,25 @@ export class Login extends Component {
             .then((res) => {
                 Alert.alert("You Succes Login")
                 this.setState({
-                    loading: false
+                    loading: false,
                 })
                 this.props.navigation.navigate("Home")
-
             })
             .catch(function (error) {
-                // Handle Errors here.
-                // var errorCode = error.code;
-                // var errorMessage = error.message;
                 this.setState({
                     loading: false
                 })
                 Alert.alert(error.message)
             });
+    }
+    componentWillMount = () => {
+        Geolocation.getCurrentPosition(position => {
+            console.warn("koneksi oke")
+        },
+            error => Alert.alert(error.message),
+            { timeout: 20000, maximumAge: 1000 }
+        )
+
     }
 
     render() {
@@ -58,7 +64,6 @@ export class Login extends Component {
                         </View>
                         <View style={[styles.flex2, styles.fluid, styles.contentCenter]}>
                             <View>
-
                                 <Form>
                                     <Item floatingLabel>
                                         <Label>Email</Label>
@@ -84,12 +89,8 @@ export class Login extends Component {
                                 }
                             </View>
                         </View>
-
-
                         <View style={[styles.flex1, styles.fluid, styles.contentCenter, styles.textLeftRight, { alignItems: "flex-end" }]}>
-
                             <Text style={[styles.mb20, styles.textWhite]} onPress={() => this.props.navigation.navigate('Register')}> Sign Up</Text><Text style={[styles.mb20, styles.textWhite]} onPress={() => this.props.navigation.navigate('Home')}>Back Home</Text>
-
                         </View>
                     </ImageBackground>
                 </Container>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, View, List, ListItem, Thumbnail, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Alert, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import firebase from '../../config/Firebase'
@@ -32,7 +32,8 @@ export class Home extends Component {
             // const { longitude, latitude } = position
             firebase.database().ref('users/' + this.state.uid).update({
                 longitude: position.coords.longitude,
-                latitude: position.coords.latitude
+                latitude: position.coords.latitude,
+                log: "online"
             })
         },
             error => Alert.alert(error.message),
@@ -42,9 +43,7 @@ export class Home extends Component {
 
     }
     getmessage = async () => {
-        this.setState({
-            loading: true
-        })
+
         await firebase.database().ref('messages').child(this.state.uid).orderByChild("time").on('child_added', (val) => {
             // let keyuser = []
             // keyuser = [...keyuser, val.key]
@@ -72,18 +71,23 @@ export class Home extends Component {
                         }
                     })
                 }
-
-
             })
-
+        })
+        this.setState({
+            loading: false
         })
 
     }
     handleLogout = () => {
-        firebase.auth().signOut()
+        firebase.database().ref('users/' + this.state.uid).update({
+            log: "offline"
+        })
             .then(() => {
-                Alert.alert("berhasil logut silahkan login kembali");
-                this.props.navigation.navigation('Login')
+                firebase.auth().signOut()
+                    .then(() => {
+                        Alert.alert("berhasil logut silahkan login kembali");
+                        this.props.navigation.navigate('Login')
+                    })
             })
     }
     componentDidMount = () => {
@@ -106,10 +110,10 @@ export class Home extends Component {
                 </Left>
                 <Body>
                     <Text>{item.name}</Text>
-                    <Text note>{item.uid}</Text>
+                    <Text note>{item.log}</Text>
                 </Body>
                 <Right>
-                    <Text note>3:43 pm</Text>
+                    <Text note></Text>
                 </Right>
             </ListItem>
         )
@@ -121,9 +125,7 @@ export class Home extends Component {
             <Container>
                 <Header style={{ backgroundColor: "#eee" }}>
                     <Left>
-                        <Button transparent>
-                            <Icon name='menu' style={{ color: "salmon" }} />
-                        </Button>
+                        <Image source={require('../../assets/images/iconfrendies.png')} style={{ width: 50, height: 30 }} />
                     </Left>
                     <Body>
                         <Title style={{ color: "salmon" }}>Friendies Chat</Title>

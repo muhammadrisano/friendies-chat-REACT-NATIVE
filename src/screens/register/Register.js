@@ -71,29 +71,19 @@ export class Register extends Component {
 
                     this.props.navigation.navigate("Login")
                 }).catch(function (error) {
-                    // Handle Errors here.
-                    // var errorCode = error.code;
-                    // var errorMessage = error.message;
-
                     Alert.alert(error.message)
                 });
         }
-
     }
-    // componentDidMount = () => {
-    //     firebase.database().ref('user').set({
-    //         name: "muhammad risano",
-    //         age: 2
-    //     })
-    // }
     saveUser = createdUser => {
         return this.state.usersRef.child(createdUser.user.uid).set({
             name: createdUser.user.displayName,
             avatar: createdUser.user.photoURL,
             telp: this.state.telp,
             status: "none",
-            latitude: "-7.7584989",
-            longitude: "110.5673452"
+            latitude: 0,
+            longitude: 0,
+            log: "offline"
         })
     }
     render() {

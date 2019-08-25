@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Text, Icon, Right, Left, Button, Title, Body, Footer, FooterTab } from 'native-base';
+import { Image, Alert } from 'react-native';
+import { Container, Header, Content, Card, CardItem, Text, Icon, Right, Left, Button, Title, Body, Footer, FooterTab, Form, Item, Label, Input } from 'native-base';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoffee, faComments, faMapMarkerAlt, faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
 import firebase from '../../config/Firebase'
-class Myprofile extends Component {
+class Editprofile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,8 +24,22 @@ class Myprofile extends Component {
             })
         }
     }
+    handleEdit = () => {
+        firebase.database().ref('users/' + this.state.uid).update({
+            name: this.state.name,
+            telp: this.state.telp,
+            status: this.state.status
+        })
+            .then(() => {
+                Alert.alert('Edit Profile success')
+                this.props.navigation.navigate('Myprofile')
+            })
+            .catch(() => {
+                Alert.alert('Ada masalah coba lagi nanti')
+                this.props.navigation.navigate('Myprofile')
+            })
+    }
     componentDidMount = () => {
-
         firebase.database().ref('users').child(this.state.uid).on('value', (val) => {
             console.warn(val.val())
             this.setState({
@@ -51,21 +65,28 @@ class Myprofile extends Component {
                     <Image source={{ uri: this.state.avatar }}
                         style={{ width: 250, height: 250, marginLeft: "auto", marginRight: "auto" }} />
                     <Card>
-                        <CardItem>
-                            <Left><Text>Name : </Text></Left>
-                            <Text>{this.state.name}</Text>
-                        </CardItem>
-                        <CardItem>
-                            <Left><Text>No Hp : </Text></Left>
-                            <Text>{this.state.telp}</Text>
-                        </CardItem>
-                        <CardItem>
-                            <Left><Text>Status : </Text></Left>
-                            <Text>{this.state.status}</Text>
-                        </CardItem>
+                        <Content>
+                            <Form>
+                                <Item floatingLabel>
+                                    <Label>Name </Label>
+                                    <Input onChangeText={(name) => this.setState({ name })} value={this.state.name} />
+                                </Item>
+                                <Item floatingLabel>
+                                    <Label>No Telp</Label>
+                                    <Input onChangeText={(telp) => this.setState({ telp })} value={this.state.telp} />
+                                </Item>
+                                <Item floatingLabel style={{ marginBottom: 20 }}>
+                                    <Label>Status</Label>
+                                    <Input onChangeText={(status) => this.setState({ status })} value={this.state.status} />
+                                </Item>
+                            </Form>
+                        </Content>
                     </Card>
-                    <Button block warning style={{ margin: 10 }} onPress={() => { this.props.navigation.navigate('Editprofile') }} >
-                        <Text>Edit Profile</Text>
+                    <Button block warning style={{ margin: 10 }} onPress={() => this.handleEdit()}>
+                        <Text>Edit </Text>
+                    </Button>
+                    <Button block info style={{ margin: 10 }} onPress={() => this.props.navigation.navigate('Myprofile')}>
+                        <Text>Cancel </Text>
                     </Button>
                 </Content>
                 <Footer >
@@ -92,4 +113,4 @@ class Myprofile extends Component {
         );
     }
 }
-export default Myprofile
+export default Editprofile
