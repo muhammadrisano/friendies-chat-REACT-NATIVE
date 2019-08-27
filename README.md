@@ -3,7 +3,7 @@
 ## Introduction
 
 
-Music Game App is an application playing game that you must touch a button and follow guidance button 
+chatting application between friends and the application see the map
 
 ## Requirements
 
