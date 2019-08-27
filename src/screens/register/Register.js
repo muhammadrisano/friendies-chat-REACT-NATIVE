@@ -71,60 +71,53 @@ export class Register extends Component {
 
                     this.props.navigation.navigate("Login")
                 }).catch(function (error) {
-                    // Handle Errors here.
-                    // var errorCode = error.code;
-                    // var errorMessage = error.message;
-
                     Alert.alert(error.message)
                 });
         }
-
     }
-    // componentDidMount = () => {
-    //     firebase.database().ref('user').set({
-    //         name: "muhammad risano",
-    //         age: 2
-    //     })
-    // }
     saveUser = createdUser => {
         return this.state.usersRef.child(createdUser.user.uid).set({
             name: createdUser.user.displayName,
             avatar: createdUser.user.photoURL,
-            telp: this.state.telp
+            telp: this.state.telp,
+            status: "none",
+            latitude: 0,
+            longitude: 0,
+            log: "offline"
         })
     }
     render() {
         return (
-            // <ImageBackground source={require('../../assets/images/iconreg.png')} style={{ width: '100%', height: '100%' }}>
-            <View style={[styles.flex1]}>
-                <View style={[styles.flex1, styles.contentCenter, styles.itemCenter]}>
-                    <H2>Form Register </H2>
-                </View>
-                <View style={styles.flex5}>
-                    <Item regular style={styles.borderInput}>
-                        <Input placeholder='email' name="email" onChangeText={(email) => this.setState({ email })} value={this.state.email} />
-                    </Item>
-                    <Item regular style={styles.borderInput}>
-                        <Input placeholder='Password' name="password" secureTextEntry={true} onChangeText={(password) => this.setState({ password })} value={this.state.password} />
-                    </Item>
-                    <Item regular style={styles.borderInput}>
-                        <Input placeholder='Confirm Password' name="password2" secureTextEntry={true} onChangeText={(password2) => this.setState({ password2 })} value={this.state.password2} />
-                    </Item>
-                    <Item regular style={styles.borderInput}>
-                        <Input placeholder='Full Name' name="fullname" onChangeText={(fullname) => this.setState({ fullname })} value={this.state.fullname} />
-                    </Item>
-                    <Item regular style={styles.borderInput}>
-                        <Input placeholder='Telp Number' name="telp" onChangeText={(telp) => this.setState({ telp })} value={this.state.telp} />
-                    </Item>
-                    <Button block style={{ marginTop: 30, width: "90%", marginLeft: "auto", marginRight: "auto" }} onPress={this.handleRegister}>
-                        <Text style={styles.textWhite}>Register</Text>
-                    </Button>
-                    <Button block warning style={{ marginTop: 10, width: "90%", marginLeft: "auto", marginRight: "auto" }} onPress={() => this.props.navigation.navigate('Home')}>
-                        <Text style={styles.textWhite}>Cancel</Text>
-                    </Button>
-                </View>
-            </View >
-            // </ImageBackground>
+            <ImageBackground source={require('../../assets/images/backreg.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={[styles.flex1]}>
+                    <View style={[styles.flex1, styles.contentCenter, styles.itemCenter]}>
+                        <H2>Form Register </H2>
+                    </View>
+                    <View style={styles.flex5}>
+                        <Item regular style={styles.borderInput}>
+                            <Input placeholder='email' name="email" onChangeText={(email) => this.setState({ email })} value={this.state.email} />
+                        </Item>
+                        <Item regular style={styles.borderInput}>
+                            <Input placeholder='Password' name="password" secureTextEntry={true} onChangeText={(password) => this.setState({ password })} value={this.state.password} />
+                        </Item>
+                        <Item regular style={styles.borderInput}>
+                            <Input placeholder='Confirm Password' name="password2" secureTextEntry={true} onChangeText={(password2) => this.setState({ password2 })} value={this.state.password2} />
+                        </Item>
+                        <Item regular style={styles.borderInput}>
+                            <Input placeholder='Full Name' name="fullname" onChangeText={(fullname) => this.setState({ fullname })} value={this.state.fullname} />
+                        </Item>
+                        <Item regular style={styles.borderInput}>
+                            <Input placeholder='Telp Number' name="telp" onChangeText={(telp) => this.setState({ telp })} value={this.state.telp} />
+                        </Item>
+                        <Button block style={{ marginTop: 30, width: "90%", marginLeft: "auto", marginRight: "auto" }} onPress={this.handleRegister}>
+                            <Text style={styles.textWhite}>Register</Text>
+                        </Button>
+                        <Button block warning style={{ marginTop: 10, width: "90%", marginLeft: "auto", marginRight: "auto" }} onPress={() => this.props.navigation.navigate('Home')}>
+                            <Text style={styles.textWhite}>Cancel</Text>
+                        </Button>
+                    </View>
+                </View >
+            </ImageBackground>
         )
     }
 }
