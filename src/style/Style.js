@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     },
     borderInput: {
         width: "90%",
-        backgroundColor: "#eee",
+        backgroundColor: "rgba(219, 231, 250, 0.5)",
         borderRadius: 30,
         paddingLeft: 10,
         marginLeft: "auto",
@@ -197,6 +197,18 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#2c3e50'
+    },
+    inputMessage: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        width: "80%",
+        marginBottom: 10,
+        borderRadius: 5
+    },
+    btnText: {
+        color: 'darkblue',
+        fontSize: 20
     }
 
 

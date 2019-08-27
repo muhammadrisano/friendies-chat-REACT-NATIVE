@@ -3,30 +3,28 @@ import { createDrawerNavigator, createStackNavigator, createAppContainer } from 
 import Login from '../../screens/login/Login'
 import Register from '../../screens/register/Register'
 import Map from '../../screens/map/Map'
-// import Leaderboards from '../../screens/leaderboards/Leaderboards'
-// import CustomsDrawer from '../../components/CustomsDrawer'
-// import Home from '../../screens/home/Home'
+import Home from '../../screens/home/Home'
+import Chat from '../../screens/chat/Chat'
+import Friends from '../../screens/friends/Friends'
+import Profilefriend from '../../screens/profile/Profilefriend'
+import Myprofile from '../../screens/profile/Myprofile'
+import Editprofile from '../../screens/profile/Editprofile'
+
 
 const AppNavigation = createStackNavigator({
     Login,
     Register,
-    Map
+    Map,
+    Home,
+    Chat,
+    Friends,
+    Profilefriend,
+    Myprofile,
+    Editprofile
 
 }, {
         initialRouteName: 'Login',
         headerMode: 'none'
     })
 
-// const DrawerNavigation = createDrawerNavigator({
-//     Menu: {
-//         screen: AppNavigation
-//     },
-//     Login,
-//     Register,
-//     Leaderboards
-// }, {
-
-//         contentComponent: CustomsDrawer,
-
-// })
 export default createAppContainer(AppNavigation)
