@@ -23,14 +23,14 @@ chatting application between friends and the application see the map
 ## Demo
 
 ### First Page
-<img src="https://i.imgur.com/74FfXUA.jpg?1" title="source: imgur.com" width='500px'/>
+<img src="src/assets/images/git/chat-home-list.jpeg" width='500px'/>
   
-### Register Page
-<img src="https://i.imgur.com/VznU3XW.jpg" title="source: imgur.com" width='500px'/>
+### Login Page
+<img src="src/assets/images/git/chat-login.jpeg" width='500px'/>
 
-### Main Page
-<img src="https://i.imgur.com/8mQ29f7.jpg" title="source: imgur.com" width='500px'/>
+### Map Friend Page
+<img src="src/assets/images/git/chat-map.jpeg" width='500px'/>
 
-### Leaderboard Page
-<img src="https://i.imgur.com/qOacRzp.jpg" title="source: imgur.com" width='500px'/>
+### List Friend Before Chat
+<img src="src/assets/images/git/chat-list.jpeg" width='500px'/>
   
